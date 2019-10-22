@@ -1,26 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import NavigationBar from './components/NavigationBar/NavigationBar';
+import CarouselSlider from './components/CarouselSlider/CarouselSlider';
+import axios from './axiosInstance';
+import Products from './components/Products/Products';
+
+class App extends Component {
+
+  state = {
+    menProducts: null,
+    womenProducts: null
+  }
+
+  componentDidMount() {
+    axios.get('/products.json')
+    .then((res) => {
+      const menProducts = [];
+      const womenProducts = [];
+      console.log(res);
+      res.data.map(product => {
+        if (product.gender === 'men') {
+          menProducts.push(product);
+        } else {
+          womenProducts.push(product);
+        }
+      });
+      this.setState({menProducts: menProducts, womenProducts: womenProducts});
+    });
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <NavigationBar />
+
+        
+        <Route path="/men" component={Products} />
+        <Route path="/women" component={Products} />
+        <Route path="/" exact component={CarouselSlider} />
+
+      </div>
+    );
+  }
 }
 
 export default App;
