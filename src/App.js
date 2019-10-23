@@ -6,6 +6,7 @@ import NavigationBar from './components/NavigationBar/NavigationBar';
 import CarouselSlider from './components/CarouselSlider/CarouselSlider';
 import axios from './axiosInstance';
 import Products from './components/Products/Products';
+import Product from './components/Products/Product';
 
 class App extends Component {
 
@@ -39,6 +40,7 @@ class App extends Component {
         
         <Route path="/men" component={Products} />
         <Route path="/women" component={Products} />
+        <Route path="/products/:id" component={Product} />
         <Route path="/" exact component={CarouselSlider} />
 
       </div>

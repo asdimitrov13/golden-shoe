@@ -14,12 +14,10 @@ class Products extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props);
         axios.get('/products.json')
             .then((res) => {
                 const products = [];
                 const gender = this.props.location.pathname === '/men' ? 'men' : 'women';
-                console.log(res);
                 res.data.map(product => {
                     if (product.gender === gender)
                         products.push(product);
@@ -29,14 +27,14 @@ class Products extends Component {
     }
 
     addToBagHandler = (id) => {
-        this.setState({chosenProd: this.state.products[2].name, showToast: true});
+        this.setState({ chosenProd: this.state.products[2].name, showToast: true });
     }
 
     render() {
         let products = null;
         if (this.state.productsReady) {
             products = this.state.products.map(product => {
-                return (<ProductCard product={product} key={product.id} clicked={() => this.addToBagHandler(product.id)}/>);
+                return (<ProductCard product={product} key={product.id} clicked={() => this.addToBagHandler(product.id)} />);
             });
         }
 
@@ -44,7 +42,14 @@ class Products extends Component {
             <Container>
                 <Row>
                     {products ? products : null}
-                    <Toast onClose={() => this.setState({showToast: false})} show={this.state.showToast} delay={3000} autohide>
+                    <Toast
+                        onClose={() => this.setState({ showToast: false })}
+                        show={this.state.showToast}
+                        delay={3000}
+                        autohide
+                        style={{position: 'absolute',
+                        top: 0,
+                        right: 0}}>
                         <Toast.Header>
                             <strong className="mr-auto">Success!</strong>
                         </Toast.Header>

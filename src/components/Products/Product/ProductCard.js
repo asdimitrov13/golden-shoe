@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, Button } from 'react-bootstrap';
 
-import './Product.css';
+import './ProductCard.css';
 
 const productCard = (props) => {
 
